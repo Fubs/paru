@@ -69,6 +69,7 @@ _pacman_opts_common=(
 
 	'--bottomup[Show AUR packages first]'
 	'--topdown[Show repository packages first]'
+  '--extraline[Print an extra line between search results in interactive mode]'
 	'--devel[Check -git/-svn/-hg development version]'
 	'--nodevel[Disable development version checking]'
 	'--develsuffixes[Suffixes to define development packages]:suffixes'
