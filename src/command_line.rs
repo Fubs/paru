@@ -209,6 +209,7 @@ impl Config {
             Arg::Long("searchby") => self.search_by = ConfigEnum::from_str(argkey, value?)?,
             Arg::Long("limit") => self.limit = value?.parse()?,
             Arg::Long("news") | Arg::Short('w') => self.news += 1,
+            Arg::Long("extraline") => self.extra_line = true,
             Arg::Long("stats") => self.stats = true,
             Arg::Short('s') => {
                 self.stats = true;

@@ -473,6 +473,7 @@ pub struct Config {
     pub keep_repo_cache: bool,
     pub fail_fast: bool,
     pub keep_src: bool,
+    pub extra_line: bool,
 
     pub sign: Sign,
     pub sign_db: Sign,
