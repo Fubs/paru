@@ -47,11 +47,12 @@ use std::fs::{read_dir, read_to_string};
 use std::io::Write;
 
 use std::path::PathBuf;
-use std::process::Command;
+use std::process::{Command, Output};
 
 use ansi_term::Style;
 use anyhow::{bail, Error, Result};
 use cini::Ini;
+use futures::StreamExt;
 use fmt::print_target;
 
 use pkgbuild::PkgbuildRepo;
@@ -257,6 +258,21 @@ async fn handle_query(config: &mut Config) -> Result<i32> {
         reopen_stdout(&stdout)?;
         for pkg in &config.targets {
             print_target(pkg, config.quiet);
+        }
+        Ok(0)
+    } else if args.has_arg("s", "search") && config.op == Op::Query && config.extra_line {
+        let search_output= exec::pacman_output(config, args)?;
+        let out_str = String::from_utf8(search_output.stdout)?;
+        let lines = out_str.lines().collect::<Vec<_>>();
+        let color = config.color;
+        if args.has_arg("q", "quiet") {
+            for line in lines {
+                println!("{}\n", line);
+            }
+        } else {
+            for pair in lines.chunks(2) {
+                println!("{}\n{}\n", color.paint(pair[0]), color.paint(pair[1]));
+            }
         }
         Ok(0)
     } else if args.has_arg("u", "upgrades") {
