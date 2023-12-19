@@ -90,6 +90,7 @@ pub fn help() {
     printtr!("    --ignoredevel          Ignore devel upgrades for specified packages");
     printtr!("    --bottomup             Shows AUR's packages first and then repository's");
     printtr!("    --topdown              Shows repository's packages first and then AUR's");
+    printtr!("    --extraline            Print an extra line between results in interactive mode");
     println!();
     printtr!("show specific options:");
     printtr!("    -c --complete         Used for completions");
