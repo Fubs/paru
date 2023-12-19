@@ -562,5 +562,4 @@ fn print_any_pkg(config: &Config, n: usize, pad: usize, pkg: &AnyPkg) {
             print_pkgbuild_pkg(config, repo, path, base, pkg, false)
         }
     };
-
 }
