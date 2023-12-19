@@ -288,10 +288,6 @@ fn print_pkgbuild_pkg(
     if config.args.count("s", "search") > 1 {
         info::print(c, 14, config.cols, "    Path", &path.display().to_string());
     }
-
-    if config.extra_line {
-        println!();
-    }
 }
 
 fn print_pkg(config: &Config, pkg: &raur::Package, quiet: bool) {
@@ -346,10 +342,6 @@ fn print_pkg(config: &Config, pkg: &raur::Package, quiet: bool) {
         let aur_url = format!("{}packages/{}", config.aur_url, pkg.package_base);
         info::print(c, 14, config.cols, "    AUR URL", aur_url.as_str());
     }
-
-    if config.extra_line {
-        println!();
-    }
 }
 
 fn print_alpm_pkg(config: &Config, pkg: &alpm::Package, quiet: bool) {
@@ -401,10 +393,6 @@ fn print_alpm_pkg(config: &Config, pkg: &alpm::Package, quiet: bool) {
         if let Some(url) = pkg.url() {
             info::print(c, 14, config.cols, "    URL", url);
         }
-    }
-
-    if config.extra_line {
-        println!();
     }
 }
 
@@ -545,6 +533,11 @@ pub fn interactive_menu(
 
 fn print_any_pkg(config: &Config, n: usize, pad: usize, pkg: &AnyPkg) {
     let c = config.color;
+
+    if config.extra_line {
+        println!();
+    }
+
     match pkg {
         AnyPkg::RepoPkg(pkg) => {
             let n = format!("{:>pad$}", n + 1, pad = pad);
