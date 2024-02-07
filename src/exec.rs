@@ -207,6 +207,9 @@ pub fn pacman_output<S: AsRef<str> + Display + std::fmt::Debug>(
 ) -> Result<Output> {
     let mut cmd = new_pacman(config, args);
     cmd.stdin(Stdio::inherit());
+    if config.extra_line {
+        println!();
+    }
     command_output(&mut cmd)
 }
 
