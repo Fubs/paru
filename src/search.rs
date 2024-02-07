@@ -108,7 +108,7 @@ fn search_pkgbuilds<'a>(
     Ok(ret)
 }
 
-fn search_local<'a>(config: &'a Config, targets: &[String]) -> Result<Vec<alpm::Package<'a>>> {
+pub fn search_local<'a>(config: &'a Config, targets: &[String]) -> Result<Vec<alpm::Package<'a>>> {
     let mut ret = Vec::new();
 
     if targets.is_empty() {
@@ -352,7 +352,7 @@ fn print_pkg(config: &Config, pkg: &raur::Package, quiet: bool) {
     }
 }
 
-fn print_alpm_pkg(config: &Config, pkg: &alpm::Package, quiet: bool) {
+pub fn print_alpm_pkg(config: &Config, pkg: &alpm::Package, quiet: bool) {
     if quiet {
         println!("{}", pkg.name());
         return;

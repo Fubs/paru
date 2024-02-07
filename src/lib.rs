@@ -54,6 +54,7 @@ use anyhow::{bail, Error, Result};
 use cini::Ini;
 use fmt::print_target;
 
+use crate::search::{print_alpm_pkg, search_local};
 use pkgbuild::PkgbuildRepo;
 use search::{interactive_search, interactive_search_local};
 use tr::{tr, tr_init};
@@ -260,22 +261,9 @@ async fn handle_query(config: &mut Config) -> Result<i32> {
         }
         Ok(0)
     } else if args.has_arg("s", "search") && config.op == Op::Query && config.extra_line {
-        let search_output = exec::pacman_output(config, args)?;
-        let out_str = String::from_utf8(search_output.stdout)?;
-        let lines = out_str.lines().collect::<Vec<_>>();
-        let color = config.color;
-        if args.has_arg("q", "quiet") {
-            for line in lines {
-                println!("{}\n", line);
-            }
-        } else {
-            for pair in lines.chunks(2) {
-                println!(
-                    "{}\n{}\n",
-                    color.base.paint(pair[0]),
-                    color.base.paint(pair[1])
-                );
-            }
+        let search_local_output = search_local(config, &config.targets)?;
+        for pkg in search_local_output {
+            print_alpm_pkg(config, &pkg, config.quiet);
         }
         Ok(0)
     } else if args.has_arg("u", "upgrades") {
